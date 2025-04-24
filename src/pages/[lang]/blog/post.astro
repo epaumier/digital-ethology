@@ -2,16 +2,23 @@
 import type { CollectionEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
 interface Props {
   post: CollectionEntry<'blog'>;
 }
 
 const { post } = Astro.props;
-console.log(post);
-const { Content } = await post.render();
+// const { Content } = await post.render();
+
 ---
 
-<Layout title={post.data.title}>
+<!-- <Layout title={post.data.title}>
   <article class="max-w-3xl mx-auto px-4 py-8">
     <header class="mb-8">
       <h1 class="text-4xl font-bold mb-2">{post.data.title}</h1>
@@ -25,5 +32,5 @@ const { Content } = await post.render();
     <div class="prose prose-lg max-w-none">
       <Content />
     </div>
-  </article>
-</Layout>
+  </article> -->
+<!-- </Layout> -->
