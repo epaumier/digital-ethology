@@ -12,6 +12,7 @@ export function getStaticPaths() {
     { params: { lang: 'fr' } },
   ];
 }
+export const prerender = true
 ---
 
 <Layout title={t('home.title')}>
