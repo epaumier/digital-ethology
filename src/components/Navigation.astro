@@ -1,0 +1,51 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import LanguageSelector from './LanguageSelector.astro';
+import { supabase } from '../lib/supabase';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { data: { session } } = await supabase.auth.getSession();
+---
+
+<nav class="bg-transparent mb-10">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex h-20 md:h-24">
+      <div class="flex">
+        <div class="flex-shrink-0 flex items-center">
+          <a href={`/${lang}`} class="text-2xl md:text-4xl text-emerald-600 font-bold overflow-auto whitespace-pre">DIGITAL
+ETHOLOGY</a>
+        </div>
+        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+          <!-- <a href={`/${lang}`} class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300">
+            {t('nav.home')}
+          </a> -->
+          <a href={`/${lang}/team`} class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300">
+            {t('nav.team')}
+          </a>
+          <!-- <a href={`/${lang}/about`} class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300">
+            {t('nav.about')}
+          </a> -->
+          <a href={`/${lang}/blog`} class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300">
+            {t('nav.blog')}
+          </a>
+          {session && (
+            <a href={`/${lang}/dashboard`} class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300">
+              {t('nav.dashboard')}
+            </a>
+          )}
+        </div>
+      </div>
+      <!-- <div class="flex items-center space-x-4">
+        <LanguageSelector />
+        <a
+          href={`/${lang}/auth`}
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+        >
+          {session ? t('auth.signout') : t('auth.signin')}
+        </a>
+      </div> -->
+    </div>
+  </div>
+</nav>

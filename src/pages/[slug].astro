@@ -1,0 +1,50 @@
+---
+import { contentfulClient} from "../lib/contentful";
+import { BLOCKS, MARKS } from '@contentful/rich-text-types';
+import Layout from "../layouts/Layout.astro";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { EntryFieldTypes } from "contentful";
+import { marked } from 'marked';
+
+interface BlogPost {
+  contentTypeId: "blogPage";
+  fields: {
+    title: EntryFieldTypes.Text;
+    body: EntryFieldTypes.RichText;
+    date: EntryFieldTypes.Date;
+    description: EntryFieldTypes.Text;
+    slug: EntryFieldTypes.Text;
+    stuff: EntryFieldTypes.Text;
+  };
+}
+
+export async function getStaticPaths() {
+  const entries = await contentfulClient.getEntries<BlogPost>({
+    content_type: "blogPage",
+  });
+
+console.log(entries.items[0].fields.body);
+  const pages = entries.items.map((item) => ({
+    params: { slug: item.fields.slug },
+    props: {
+      title: item.fields.title,
+      content: documentToHtmlString(item.fields.body),
+      stuff: marked.parse(item.fields.stuff),
+      // date: new Date(item.fields.date).toLocaleDateString(),
+    },
+  }));
+  return pages;
+}
+const { content, title, stuff } = Astro.props;
+export const prerender = true
+---
+
+<Layout title={title}>
+  <div class="flex flex-col justify-center items-center">
+    <h1 class="text-2xl font-bold text-gray-900 mb-10">{title}</h1>
+    <!-- <time>{date}</time> -->
+    <article set:html={stuff} />
+    <!-- <div>{stuff}</div> -->
+    <!-- <img class="w-1/2 h-1/2" src={post.image} alt={post.title} /> -->
+  </div>
+</Layout>

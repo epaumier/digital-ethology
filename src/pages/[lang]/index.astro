@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import Card from "../../components/Card.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+---
+
+<Layout title={t('home.title')}>
+  <div class="flex flex-col gap-8">
+    <div class="flex flex-col mx-4  justify-center">
+      <div>
+      <h1 class="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
+        {t('about.title')}
+      </h1>
+      <p class="text-xl text-gray-600 mb-8">
+        {t('about.description')}
+      </p>
+    </div>
+      <div class="prose prose-lg">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <p>
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-col w-full md:flex-row bg-emerald-500">
+      <Card
+        title="Titre du projet"
+        description="Lorem ipsum dolor sit amet..."
+        projectName="Project 1"
+      />
+      <Card
+        title="Titre du projet"
+        description="Lorem ipsum dolor sit amet..."
+        projectName="Project 2"
+      />
+    </div>
+  </div>
+</Layout>

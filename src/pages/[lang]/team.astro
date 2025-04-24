@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const team = [
+  {
+    name: 'John Doe',
+    role: 'CEO',
+    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John'
+  },
+  {
+    name: 'Jane Smith',
+    role: 'CTO',
+    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane'
+  }
+];
+---
+
+<Layout title={t('team.title')}>
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">
+      {t('team.title')}
+    </h1>
+    <p class="text-xl text-gray-600">
+      {t('team.description')}
+    </p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {team.map((member) => (
+      <div class="bg-white rounded-lg shadow-md p-6 text-center">
+        <img
+          src={member.image}
+          alt={member.name}
+          class="w-32 h-32 rounded-full mx-auto mb-4"
+        />
+        <h3 class="text-xl font-semibold text-gray-900">{member.name}</h3>
+        <p class="text-gray-600">{member.role}</p>
+      </div>
+    ))}
+  </div>
+</Layout>
