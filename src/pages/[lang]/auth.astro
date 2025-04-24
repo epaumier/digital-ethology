@@ -1,4 +1,4 @@
----
+<!-- ---
 import Layout from '../../layouts/Layout.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
@@ -50,7 +50,7 @@ export function getStaticPaths() {
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
@@ -75,4 +75,4 @@ export function getStaticPaths() {
       }
     }
   });
-</script>
+</script> -->

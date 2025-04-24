@@ -1,12 +1,12 @@
 ---
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import LanguageSelector from './LanguageSelector.astro';
-import { supabase } from '../lib/supabase';
+// import { supabase } from '../lib/supabase';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const { data: { session } } = await supabase.auth.getSession();
+// const { data: { session } } = await supabase.auth.getSession();
 ---
 
 <nav class="bg-transparent mb-10">
@@ -30,11 +30,11 @@ ETHOLOGY</a>
           <a href={`/${lang}/blog`} class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300">
             {t('nav.blog')}
           </a>
-          {session && (
+          <!-- {session && (
             <a href={`/${lang}/dashboard`} class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300">
               {t('nav.dashboard')}
             </a>
-          )}
+          )} -->
         </div>
       </div>
       <!-- <div class="flex items-center space-x-4">
